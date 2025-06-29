@@ -1,0 +1,169 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Pure Hub - MM2",
+    Icon = 0,
+    LoadingTitle = "xeno.onl",
+    LoadingSubtitle = "by rhd0/round",
+    ShowText = "Rayfield",
+    Theme = "Green",
+    ToggleUIKeybind = "K",
+
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false,
+
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "PureHub",
+        FileName = "Pure Hub By rhd0"
+    },
+
+    KeySystem = false,
+    KeySettings = {
+        Title = "Pure Keys",
+        Subtitle = "Key System",
+        Note = "No method of obtaining the key is provided",
+        FileName = "pure key for puro",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = {"Hello"}
+    }
+})
+
+-- Load external scripts
+local Aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Aimbot-V3/main/src/Aimbot.lua"))()
+local chams = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stratxgy/Roblox-Chams-Highlight/refs/heads/main/Highlight.lua"))()
+local targethud = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stratxgy/Lua-TargetHud/refs/heads/main/targethud.lua"))()
+local speed = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stratxgy/Lua-Speed/refs/heads/main/speed.lua"))()
+
+-- Aimbot Tab
+local AimbotTab = Window:CreateTab("Aimbot", "crosshair")
+AimbotTab:CreateSection("Aimbot Settings")
+
+AimbotTab:CreateToggle({
+    Name = "Aimbot",
+    CurrentValue = false,
+    Flag = "AimbotToggle",
+    Callback = function(Value)
+        Aimbot.Load()
+    end,
+})
+
+AimbotTab:CreateToggle({
+    Name = "FOV Circle",
+    CurrentValue = false,
+    Flag = "FOVVisibleToggle",
+    Callback = function(Value)
+        getgenv().ExunysDeveloperAimbot.FOVSettings.Visible = Value
+    end,
+})
+
+AimbotTab:CreateSlider({
+    Name = "FOV Size",
+    Range = {0, 200},
+    Increment = 10,
+    Suffix = "FOV",
+    CurrentValue = 10,
+    Flag = "FOVSlider",
+    Callback = function(Value)
+        getgenv().ExunysDeveloperAimbot.FOVSettings.Radius = Value
+    end,
+})
+
+AimbotTab:CreateKeybind({
+    Name = "Aimbot Keybind",
+    CurrentKeybind = "MB2",
+    HoldToInteract = true,
+    Flag = "AimbotKeybind",
+    Callback = function(Key)
+        getgenv().ExunysDeveloperAimbot.Settings.TriggerKey = Key
+    end,
+})
+
+-- Visuals Tab
+local VisualsTab = Window:CreateTab("Visuals", "eye")
+VisualsTab:CreateSection("Chams")
+
+VisualsTab:CreateToggle({
+    Name = "Chams Enabled",
+    CurrentValue = false,
+    Flag = "ChamsToggle",
+    Callback = function(Value)
+        getgenv().chams.enabled = Value
+    end,
+})
+
+VisualsTab:CreateSlider({
+    Name = "Chams Transparency",
+    Range = {0, 1},
+    Increment = 0.1,
+    Suffix = "Transparency",
+    CurrentValue = 0,
+    Flag = "ChamsTransparencySlider",
+    Callback = function(Value)
+        getgenv().chams.fillTransparency = Value
+    end,
+})
+
+VisualsTab:CreateSection("Target HUD")
+
+VisualsTab:CreateToggle({
+    Name = "Enable Target HUD",
+    CurrentValue = false,
+    Flag = "TargetHUDToggle",
+    Callback = function(Value)
+        getgenv().targethud = Value
+    end,
+})
+
+-- Speed Settings
+getgenv().speed = {
+    enabled = false,
+    speed = 16,
+    control = false,
+    friction = 2.0,
+    keybind = Enum.KeyCode.KeypadDivide
+}
+
+-- Player Tab
+local PlayerTab = Window:CreateTab("Player", "user")
+PlayerTab:CreateSection("Speed")
+
+PlayerTab:CreateToggle({
+    Name = "Speed Enabled",
+    CurrentValue = false,
+    Flag = "SpeedToggle",
+    Callback = function(Value)
+        getgenv().speed.enabled = Value
+    end,
+})
+
+PlayerTab:CreateSlider({
+    Name = "Speed Amount",
+    Range = {0, 1000},
+    Increment = 1,
+    Suffix = "Speed",
+    CurrentValue = 16,
+    Flag = "SpeedSlider",
+    Callback = function(Value)
+        getgenv().speed.speed = Value
+    end,
+})
+
+PlayerTab:CreateKeybind({
+    Name = "Speed Keybind",
+    CurrentKeybind = "Divide",
+    HoldToInteract = false,
+    Flag = "SpeedKeybind",
+    Callback = function(Key)
+        getgenv().speed.keybind = Key
+    end,
+})
+
+-- Success Notification
+Rayfield:Notify({
+    Title = "Yippee!",
+    Content = "Pure Hub has loaded successfully.",
+    Duration = 6.5,
+    Image = "rbxassetid://123456789" -- Optional: replace with a real image ID
+})
